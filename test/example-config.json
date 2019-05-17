@@ -1,0 +1,24 @@
+{
+  "git": {
+    "git_config": {
+      "remote.origin.url": "git@bitbucket.org:fortmanr/consul_kv_backup_test.git",
+      "remote.origin.fetch": "+refs/heads/*:refs/remotes/origin/*",
+      "branch.master.remote": "origin",
+      "branch.master.merge": "refs/heads/master",
+      "branch.master.rebase": "true",
+      "user.name": "Janitor",
+      "user.email": "janitor@parchment.com",
+      "core.sshCommand": "ssh -o StrictHostKeyChecking=no"
+    },
+    "git_root_dir": "/tmp/repo"
+   },
+  "consul": {
+    "address": "http://consul:8500"
+  },
+  "amqp": {
+    "amqp_queue": "ConsulKvBackup.Topic",
+    "amqp_exchange": "amq.topic",
+    "amqp_bind": false,
+    "amqp_host": "rabbitmq"
+  }
+}

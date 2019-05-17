@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'slop'
+require 'logger'
+require 'json'
+require 'consul_kv_backup'
+
+logger = Logger.new(STDOUT)
+
+opts = Slop.parse do |o|
+  o.string '--config-file', required: true
+  o.on '-h', '--help', 'print help' do
+    logger.warn("\n#{o}")
+    exit(false)
+  end
+end
+
+config = JSON.parse(File.read(opts['config-file']))
+
+ConsulKvBackup.start(config)
