@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  consul:
+    image: "consul:latest"
+    ports:
+      - "8500:8500"
+  rabbitmq:
+    image: "rabbitmq:3.7-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  consul-kv-watcher:
+    image: "rfortman/consul_watcher:latest"
+    depends_on:
+      - consul
+      - rabbitmq
+    volumes:
+      - type: bind
+        source: ./data
+        target: /tmp/data
+      - type: bind
+        source: ./example-watcher-config.json
+        target: /etc/consul_watch/config.json
+        read_only: true
+    env_file: ./watcher-test-env.vars 
+
+  consul-kv-backup:
+    image: "rfortman/consul_kv_backup:latest"
+    depends_on:
+      - consul
+      - rabbitmq
+    volumes:
+      - type: bind
+        source: ./example-config.json
+        target: /etc/consul_kv_backup/config.json
+        read_only: true
+      - type: bind
+        source: ./../../../.ssh/consul_backup_test_key
+        target: /root/.ssh/id_rsa
+        read_only: true
+    env_file: ./test-env.vars 

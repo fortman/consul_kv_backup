@@ -1,0 +1,19 @@
+{
+  "storage": {
+    "storage_name": "disk-storage-testing",
+    "cache_dir": "/tmp/data/consul-watchers",
+    "classname": "ConsulWatcher::Storage::Disk",
+    "compress": true
+  },
+  "watch_type": {
+    "classname": "ConsulWatcher::WatchType::Key",
+    "filters": {
+      "key_property": [ "ModifyIndex" ],
+      "key_path": [ ".*asd.*" ]
+    }
+  },
+  "destination": {
+    "classname": "ConsulWatcher::Destination::Amqp",
+    "amqp_hosts": [ "rabbitmq1", "rabbitmq" ]
+  }
+}
