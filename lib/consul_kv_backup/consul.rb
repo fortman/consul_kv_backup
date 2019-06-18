@@ -13,8 +13,8 @@ module ConsulKvBackup
       setup_connection
     end
 
-    def consul_key(key_path)
-      Diplomat::Kv.get(key_path)
+    def consul_key(key_path, dc)
+      Diplomat::Kv.get(key_path, { dc: dc })
     end
 
     private

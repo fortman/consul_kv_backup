@@ -18,7 +18,7 @@
   "amqp": {
     "amqp_queue": "ConsulKvBackup.Topic",
     "amqp_exchange": "amq.topic",
-    "amqp_bind": false,
-    "amqp_host": "rabbitmq"
+    "amqp_bind": true,
+    "amqp_hosts": ["rabbitmq1", "rabbitmq"]
   }
 }

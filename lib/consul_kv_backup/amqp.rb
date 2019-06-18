@@ -23,7 +23,8 @@ module ConsulKvBackup
                                 :topic,
                                 @amqp_exchange,
                                 durable: true)
-      @queue = @ch.queue(@amqp_queue, durable: true).bind(@ex, routing_key: @amqp_routing_key)
+      @queue = @ch.queue(@amqp_queue, durable: true)
+      @queue.bind(@ex, routing_key: @amqp_routing_key) if @amqp_bind
     end
 
     def consume
@@ -35,7 +36,8 @@ module ConsulKvBackup
 
     def process_message(delivery_info, properties, body)
       data = JSON.parse(body)
-      data['value'] = @consul.consul_key(data['key_path']) if data['new_value']
+      dc = data['consul_dc']
+      data['value'] = @consul.consul_key(data['key_path'], dc) if data['new_value']
       
       @git.process_data(data)
     end
@@ -71,7 +73,8 @@ module ConsulKvBackup
         amqp_password: 'guest',
         amqp_queue: nil,
         amqp_exchange: "amq.topic",
-        amqp_routing_key: 'consul_watcher.key.#'
+        amqp_routing_key: 'consul_watcher.key.#',
+        amqp_bind: false
       }
     end
   end

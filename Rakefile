@@ -55,7 +55,7 @@ task :start_deps do
 end
 
 task up: [:start_deps] do
-  cmd = 'docker-compose --file test/docker-compose.yml up consul-kv-backup'
+  cmd = 'docker-compose --file test/docker-compose.yml up -d consul-kv-backup'
   _output, _status = FlazmRubyHelpers::Os.exec(cmd)
 end
 

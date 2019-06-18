@@ -11,6 +11,9 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Send consul watch events to an amqp.'
   spec.homepage      = 'https://github.com/fortman/consul_kv_backup'
+  spec.metadata = {
+    'docker_image_name' => 'rfortman/consul_kv_backup'
+  } 
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
