@@ -67,7 +67,7 @@ module ConsulKvBackup
     end
 
     def git_add(path, value)
-      FileUtils.mkdir_p(File.dirname(@git_root_dir))
+      FileUtils.mkdir_p(File.dirname(path))
       file = File.open(path, 'w')
       file.write(value)
       file.close
