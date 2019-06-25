@@ -27,7 +27,7 @@ module ConsulKvBackup
         git_add(path, value)
       end
 
-      # git_push if @git['push']
+       git_push if @git_push
     end
 
     private
@@ -51,6 +51,7 @@ module ConsulKvBackup
       if exist
         FlazmRubyHelpers::Os.exec("git reset --hard HEAD")
         FlazmRubyHelpers::Os.exec("git checkout #{branch}")
+        FlazmRubyHelpers::Os.exec("git pull origin #{branch}")
       else
         FlazmRubyHelpers::Os.exec("git fetch")
         FlazmRubyHelpers::Os.exec("git branch #{branch} master")
@@ -66,6 +67,7 @@ module ConsulKvBackup
     end
 
     def git_add(path, value)
+      FileUtils.mkdir_p(File.dirname(@git_root_dir))
       file = File.open(path, 'w')
       file.write(value)
       file.close
@@ -90,6 +92,7 @@ module ConsulKvBackup
     def defaults
       {
         git_root_dir: '/tmp/consul_backup',
+        git_push: false,
         git_config: {}
       }
     end
