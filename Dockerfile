@@ -1,4 +1,4 @@
-FROM consul:1.4.0
+FROM consul:1.6.2
 
 ARG gem_file
 
